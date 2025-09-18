@@ -1,41 +1,9 @@
-// 文字列を逆順にして返す関数
-function reverse(string) {
-    return Array.from(string).reverse().join(""); //メソッドチェイン
-}
+module.exports = Phrase;
 
 // 文字列を逆順にして返す関数（Stringオブジェクトのプロトタイプに追加）
 String.prototype.reverse = function() {
     return Array.from(this).reverse().join("");
 }
-
-// 文字列が空かどうかを返す関数（Stringオブジェクトのプロトタイプに追加）
-String.prototype.blank = function() {
-    return !!this.match(/^\s*$/);
-}
-
-// 配列の最後の要素を返す関数（Arrayオブジェクトのプロトタイプに追加）
-Array.prototype.last = function() {
-    return this[this.length - 1];
-}
-
-// メールアドレスを「@」で分割して配列で返す関数
-function emailParts(email) {
-    return email.toLowerCase().split("@");
-}
-
-// TranslatedPhraseオブジェクトを定義する
-function TranslatedPhrase(content, translation) {
-    this.content = content;
-    this.translation = translation;
-
-    // 小文字化した翻訳内容を返す関数
-    this.processedContent = function processedContent() {
-        return this.processer(this.translation);
-    }
-}
-
-// TranslatedPhraseはPhraseを継承する
-TranslatedPhrase.prototype = new Phrase();
 
 // Phraseオブジェクトを定義する
 function Phrase(content) {
@@ -48,7 +16,7 @@ function Phrase(content) {
 
     // パリンドローム用に加工した内容を返す関数
     this.processedContent = function processedContent() {
-        return this.processer(this.content);
+        return this.processer(this.letters());
     }
 
     // 回文であればtrueを返す関数
@@ -56,8 +24,12 @@ function Phrase(content) {
         return this.processedContent() === this.processedContent().reverse();
     }
 
-    // 大文字化した内容を返す関数
-    this.louder = function louder() {
-        return this.content.toUpperCase();
+    // コンテンツの文字だけを返す関数
+    this.letters = function letters() {
+        return Array.from(this.content).filter(c => c.match(/[a-z]/gi)).join("");
+    }
+
+    this.letters = function letters() {
+        return (this.content.match(/[a-z]/gi) || []).join("");
     }
 }
