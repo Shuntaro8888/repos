@@ -21,11 +21,7 @@ function Phrase(content) {
 
     // 回文であればtrueを返す関数
     this.palindrome = function palindrome() {
-        if (this.processedContent()) {
-            return this.processedContent() === this.processedContent().reverse();
-        } else {
-            return false;
-        }
+        return this.processedContent() === this.processedContent().reverse();
     }
 
     // コンテンツの文字だけを返す関数
